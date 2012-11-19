@@ -1,10 +1,10 @@
 -module(ring_rosy).
--export([start/1, timer/0, zeroth/1, ring/2, other/1]).
+-export([start/1, other/1, zeroth/1]).
 
 %% ring of Erlang processes, dies after one pass
 
 start(N) ->
-    Zeroth = spawn(ring_rosy, zeroth, [spawn(ring_rosy, timer, [])]),
+    Zeroth = spawn(ring_rosy, zeroth, [spawn(fun timer/0)]),
     First = ring(N-1, Zeroth),
     First ! nothing.
 
